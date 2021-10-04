@@ -7,18 +7,23 @@ var gLevel = {
     size: 4,
     mines: 2
 }
-var gGame;
+var gGame
 var gIsFirstClick = false;
-var gIdx = 0
-var gFlagCount = 0;
-var gClearedCell = 0;
-var gLife = 3;
 
 function init() {
     clearInterval(gClockInterval)
-    document.querySelector('.clock').innerText = '00:00'
-    gIsFirstClick = false;
+    gGame = {
+        isOn: true,
+        shownCount: 0,
+        markedCount: 0,
+        secsPassed: 0,
+        lives: 3,
+    }
     gBoard = buildBoard()
+    document.querySelector('.clock').innerText = '00:00'
+    document.querySelector('.flag-counter').innerText = `Flags: 0`;
+    document.querySelector('.lives').innerText = `Lives: 3`;
+    gIsFirstClick = false;
     renderBoard()
 }
 
@@ -88,6 +93,7 @@ function renderBoard() {
 }
 
 function cellClicked(elCell, i, j) {
+    if (!gGame.isOn) return;
     var currCell = gBoard[i][j];
     if (!gIsFirstClick) {
         gIsFirstClick = true;
@@ -102,14 +108,14 @@ function cellClicked(elCell, i, j) {
     currCell.isShown = true;
     elCell.classList.remove('covered')
     renderCell(elCell, i, j)
+    gGame.shownCount++
     if (currCell.isMine) {
-        gLife--
-        document.querySelector('.lives').innerText = `Lives: ${gLife}`
-        if (gLife === 0) gameOver()
-        console.log('mine');
-    } else {
-        gClearedCell++
-        if (isGameOver()) gameOver()
+        gGame.lives--
+        document.querySelector('.lives').innerText = `Lives: ${gGame.lives}`
+        if (gGame.lives === 0) gameOver()
+        else {
+            if (isGameOver()) gameOver()
+        }
     }
 }
 function armBoard(board) {
@@ -122,23 +128,24 @@ function armBoard(board) {
 
 
 function cellMarked(elCell, i, j) {
+    if (!gGame.isOn) return;
     if (gBoard[i][j].isShown) return;
     gBoard[i][j].isMarked = !gBoard[i][j].isMarked;
     var cellVal
     if (gBoard[i][j].isMarked) {
-        gFlagCount++
+        gGame.markedCount++
         cellVal = FLAG;
     } else {
-        gFlagCount--
+        gGame.markedCount--
         cellVal = ''
     }
     elCell.innerHTML = cellVal;
-    document.querySelector('.flag-counter').innerText = `Flags: ${gFlagCount}`;
+    document.querySelector('.flag-counter').innerText = `Flags: ${gGame.markedCount}`;
     if (isGameOver()) gameOver();
 }
 //Game ends when all mines are marked, and all the other cells are shown
 function isGameOver() {
-    return ((gFlagCount + gClearedCell) === gLevel.size ** 2) ? true : false;
+    return ((gGame.markedCount + gGame.shownCount) === gLevel.size ** 2) ? true : false;
 }
 //When user clicks a cell with no mines around, we need to open not only that cell, but also its neighbors.
 function expandShown(board, elCell, i, j) {
@@ -146,8 +153,8 @@ function expandShown(board, elCell, i, j) {
 }
 
 function gameOver() {
+    gGame.isOn = false;
     clearInterval(gClockInterval);
-    console.log('end');
 
 }
 
@@ -156,5 +163,5 @@ function changeDifficulty(size, mines) {
         size: size,
         mines: mines,
     }
-    init()
+    init();
 }
