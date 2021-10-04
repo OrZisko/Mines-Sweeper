@@ -1,0 +1,32 @@
+table {
+    margin: auto;
+}
+.cell {
+    text-align: center;
+    border: 1px solid black;
+    width: 18px;
+    height: 18px;
+    padding: 2px;
+    box-sizing:content-box
+    /* font-size: 20px; */
+}
+
+button {
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+
+h1 {
+    text-align: center;
+}
+
+.mine-pic {
+    width: 15px;
+}
+.flag {
+    font-size: 10px;
+}
+
+.covered {
+    background-color: blue;
+}
