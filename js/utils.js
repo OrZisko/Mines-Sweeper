@@ -23,15 +23,16 @@ function getEmptyCell(i, j) {
 
 function startClock() {
     gStartTime = Date.now()
-    gClockInterval = setInterval(runningClock, 1000)
+    gClockInterval = setInterval(runningClock, 100)
 }
 
 function runningClock() {
     var elClock = document.querySelector('.clock')
     var sec = Math.floor((Date.now() - gStartTime) / 1000)
+    var min;
     if ((sec / 60) >= 1) {
-        var min = Math.floor(currTime / 60)
-        var sec = sec % 60;
+        min = Math.floor(sec / 60)
+        sec = sec % 60;
     }
     if (sec < 10) sec = `0${sec}`;
     if (!min) min = '00';
@@ -39,8 +40,4 @@ function runningClock() {
         if (min < 10) min = `0${min}`;
     }
     elClock.innerText = `${min}:${sec}`
-}
-
-function showEvent(ev) {
-    console.log(ev);
 }

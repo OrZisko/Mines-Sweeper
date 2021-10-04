@@ -12,9 +12,15 @@
 <body onload="init()">
     <h1>Mine Sweeper</h1>
     <div class="game-panel">
+        <div class="difficulties">
+            <button onclick="changeDifficulty(4, 2)">Easy</button>
+            <button onclick="changeDifficulty(8, 12)">Normal</button>
+            <button onclick="changeDifficulty(12, 30)">hard</button>
+        </div>
         <button onclick="init()">😁</button>
         <div class="clock"></div>
-        <div class="flag-count"></div>
+        <div class="flag-counter">Flags: 0</div>
+        <div class="lives">Lives: 3</div>
         <table class="game-board">
 
         </table>
