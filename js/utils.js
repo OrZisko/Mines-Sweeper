@@ -1,10 +1,13 @@
 'use strict'
 var gStartTime;
 var gClockInterval;
-
-function renderCell(el, i, j) {
+var gTime = 0
+function renderCell(i, j) {
+    var elCell = document.querySelector(`.cell${i}-${j}`)
+    elCell.classList.toggle('covered')
     var cellVal = (gBoard[i][j].isMine) ? MINE : gBoard[i][j].minesAroundCount
-    el.innerHTML = cellVal;
+    if (!gBoard[i][j].isShown) cellVal = ''
+    elCell.innerHTML = cellVal;
 }
 
 function getRandomInt(min, max) {
@@ -13,12 +16,14 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-function getEmptyCell(i, j) {
+function getEmptyCell() {
+    var emptyCells = [];
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[i].length; j++) {
-            if (!gBoard[i][j].isMine) return gBoard[i][j]
+            if (!gBoard[i][j].isMine && !gBoard[i][j].isShown) emptyCells.push(gBoard[i][j])
         }
     }
+    return (emptyCells.splice(getRandomInt(0, emptyCells.length), 1)).pop()
 }
 
 function startClock() {
@@ -29,6 +34,7 @@ function startClock() {
 function runningClock() {
     var elClock = document.querySelector('.clock')
     var sec = Math.floor((Date.now() - gStartTime) / 1000)
+    gTime = sec;
     var min;
     if ((sec / 60) >= 1) {
         min = Math.floor(sec / 60)
@@ -40,4 +46,20 @@ function runningClock() {
         if (min < 10) min = `0${min}`;
     }
     elClock.innerText = `${min}:${sec}`
+}
+
+function renderSymbolAmount(amount, symbol) {
+    var elHints = document.querySelector('.hints-box span')
+    var elSafe = document.querySelector('.safe-box span')
+    var symbolsStr = ''
+    for (var i = 0; i < amount; i++) {
+        symbolsStr += symbol;
+    }
+    switch (symbol) {
+        case HINT:
+            elHints.innerHTML = symbolsStr;
+            break;
+        case SAFE:
+            elSafe.innerHTML = symbolsStr;
+    }
 }

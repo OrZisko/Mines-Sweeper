@@ -16,15 +16,29 @@
             <button onclick="changeDifficulty(4, 2)">Easy</button>
             <button onclick="changeDifficulty(8, 12)">Normal</button>
             <button onclick="changeDifficulty(12, 30)">hard</button>
+            <button onclick="sevenBoom()">7 BOOM!!</button>
         </div>
-        <button onclick="init()">😁</button>
+        <button onclick="init()" class="smily">😁</button>
+        <p class="best-score"></p>
         <div class="clock"></div>
         <div class="flag-counter"></div>
         <div class="lives"></div>
+        <button onclick="undo()">Undo</button>
+        <div class="belt">
+            <div class="hints-box">
+                <button onclick="getHint()">Get Hint</button>
+                <span></span>
+            </div>
+            <div class="safe-box">
+                <button onclick="getSafe()">Safe Click</button>
+                <span></span>
+            </div>
+        </div>
         <table class="game-board">
 
         </table>
     </div>
+    <footer>Made by Or Ziskovich</footer>
     <script src="js/main.js"></script>
     <script src="js/utils.js"></script>
 </body>
