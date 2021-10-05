@@ -1,17 +1,41 @@
-table {
-    margin: auto;
-}
-.cell {
-    text-align: center;
-    border: 1px solid black;
-    width: 35px;
-    height: 35px;
-    padding: 2px;
+body {
+    background-image: url('../img/blackBackground.jpg');
+    color: white;
 }
 
-.difficulties button, .smily {
-    margin-left: 50%;
+.board {
+position: absolute;
+left: 50%;
+top: 60%;
+transform: translate(-50%, -60%);
+/* outline: 35px solid rgb(26, 85, 26); */
+outline-offset: 7px;
+}
+
+.cell {
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    /* padding: 2px; */
+    background-color: rgba(211, 211, 211, 0.472);
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+}
+
+.difficulties {
+    position: absolute;
+    left: 50%;
     transform: translate(-50%);
+    top: 100px;
+}
+
+.difficulties button {
+height: 50px;
+width: 80px;
+font-size: 15px;
+font-weight: bold;
+padding: 0;
 }
 
 h1 {
@@ -26,26 +50,80 @@ h1 {
 }
 
 .covered {
-    background-color: blue;
+    background-image: linear-gradient(rgb(0, 0, 218), rgb(117, 117, 117));
+}
+
+.covered:hover {
+    background-image: linear-gradient(rgba(0, 0, 218, 0.602), rgba(117, 117, 117, 0.555));
 }
 
 footer {
-    margin-top: 20px;
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translate(-50%);
 text-align: center;
 }
 
-.hint-img, .safe-img {
-    width: 35px;
-    background-color: orange;
-}
-.hints-box {
-    width: 250px;
+
+.hints-box, .safe-box {
+    font-size: 40px;
+    position: relative;
+    top: 180px;
 }
 
-.hints-box button {
+.inf {
+    font-size: 40px;    
+    position: relative;
+    top: 150px
+}
+
+.undo {
+    position: absolute;
+    right: 0;
+    top: 300px;
+    height: 50px;
+    width: 80px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.hints-box button, .safe-box button {
     width: 100px;
     height: 30px;
+    border: 1px solid black;
+    border-radius: 8px;
 }
 .halo {
-    border: 2px solid orange;
+    border: 3px solid rgba(218, 165, 32, 0.767);
+    outline: 1px solid rgba(255, 255, 0, 0.513)
+}
+.smily {
+    text-align: center;
+position: fixed;
+left: 50%;
+bottom: 100%;
+transform: translate(-50%);
+height: 40px;
+width: 50px;
+font-size: 25px;
+}
+
+table, tr, td {
+    border: 3px solid rgb(78, 76, 76);
+
+}
+
+.best-score {
+    position: fixed;
+    right: 0;
+    top: 100px;
+    font-size: 40px
+}
+
+.clock {
+    font-size: 40px;
+    position: fixed;
+    right: 0;
+    top: 200px
 }

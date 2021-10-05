@@ -3,8 +3,8 @@ var gUserBestScore;
 
 const MINE = '<img class="mine-img" src="img/mine.png">'
 const FLAG = '<span class="flag">🚩</span>'
-const HINT = '<img class="hint-img" src="img/hint.png">'
-const SAFE = '<img class="safe-img" src="img/safe.png">'
+const HINT = '💡'
+const SAFE = '⛏️'
 var gIdx = 1
 var gBoard;
 var gLevel = {
@@ -282,10 +282,11 @@ function getSafe() {
 
 function undo() {
     if (!gGame.isOn) return
+    if (gGame.shownCount === 0) return;
     var prevMove = gPast.pop()
     for (var i = 0; i < prevMove.length; i++) {
         prevMove[i].isShown = false;
-        if (gGame.shownCount > 0) gGame.shownCount--
+        gGame.shownCount--
         if (prevMove[i].isMine) {
             gGame.lives++
             document.querySelector('.lives').innerText = `Lives: ${gGame.lives}`

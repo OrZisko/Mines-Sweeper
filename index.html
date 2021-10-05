@@ -18,12 +18,13 @@
             <button onclick="changeDifficulty(12, 30)">hard</button>
             <button onclick="sevenBoom()">7 BOOM!!</button>
         </div>
-        <button onclick="init()" class="smily">😁</button>
         <p class="best-score"></p>
         <div class="clock"></div>
-        <div class="flag-counter"></div>
-        <div class="lives"></div>
-        <button onclick="undo()">Undo</button>
+        <div class="inf">
+            <div class="flag-counter"></div>
+            <div class="lives"></div>
+        </div>
+        <button class="undo" onclick="undo()">Undo</button>
         <div class="belt">
             <div class="hints-box">
                 <button onclick="getHint()">Get Hint</button>
@@ -34,9 +35,12 @@
                 <span></span>
             </div>
         </div>
-        <table class="game-board">
+        <div class="board">
+            <button onclick="init()" class="smily">😁</button>
+            <table class="game-board">
 
-        </table>
+            </table>
+        </div>
     </div>
     <footer>Made by Or Ziskovich</footer>
     <script src="js/main.js"></script>
