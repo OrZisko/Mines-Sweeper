@@ -1,3 +1,4 @@
+
 body {
     background-image: url('../img/blackBackground.jpg');
     color: white;
@@ -8,7 +9,6 @@ position: absolute;
 left: 50%;
 top: 60%;
 transform: translate(-50%, -60%);
-/* outline: 35px solid rgb(26, 85, 26); */
 outline-offset: 7px;
 }
 
@@ -16,7 +16,6 @@ outline-offset: 7px;
     text-align: center;
     width: 35px;
     height: 35px;
-    /* padding: 2px; */
     background-color: rgba(211, 211, 211, 0.472);
     font-size: 25px;
     font-weight: bold;

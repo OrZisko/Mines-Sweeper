@@ -21,6 +21,7 @@ var gIsSafe = false;
 var gIs7Boom = false;
 
 function init() {
+    document.querySelector('.smily').innerText = '😁'
     gIdx = 1;
     checkUserScore()
     clearInterval(gClockInterval)
@@ -54,6 +55,7 @@ function buildBoard() {
                 isShown: false,
                 isMine: false,
                 isMarked: false,
+                isHint: false,
                 i: i,
                 j: j,
                 idx: gIdx++
@@ -150,7 +152,16 @@ function cellClicked(elCell, i, j) {
     if (currCell.isMine) {
         gGame.lives--
         document.querySelector('.lives').innerText = `Lives: ${gGame.lives}`
-        if (gGame.lives === 0) gameOver()
+        if (gGame.lives === 0) {
+            for (var i = 0; i < gLevel.size; i++) {
+                for (var j = 0; j < gLevel.size; j++) {
+                    if (gBoard[i][j].isShown || !gBoard[i][j].isMine) continue;
+                    gBoard[i][j].isShown = true;
+                    renderCell(i, j)
+                }
+            }
+            gameOver()
+        }
     } else {
         if (!currCell.minesAroundCount) expandShown(i, j)
     }
@@ -225,30 +236,28 @@ function changeDifficulty(size, mines) {
 }
 
 function getHint() {
+    if (!gIsFirstClick) return;
     if (gGame.hints > 0)
         gIsHint = true;
     gGame.hints--
     renderSymbolAmount(gGame.hints, HINT)
 }
 function hint(row, coll) {
+    var hintedCells = [];
     for (var i = row - 1; i <= row + 1; i++) {
         if (i < 0 || i > gBoard.length - 1) continue;
         for (var j = coll - 1; j <= coll + 1; j++) {
             if (j < 0 || j > gBoard[i].length - 1) continue;
             if (gBoard[i][j].isShown) continue;
             gBoard[i][j].isShown = true;
+            hintedCells.push(gBoard[i][j]);
             renderCell(i, j)
         }
     }
     setTimeout(function () {
-        for (var i = row - 1; i <= row + 1; i++) {
-            if (i < 0 || i > gBoard.length - 1) continue;
-            for (var j = coll - 1; j <= coll + 1; j++) {
-                if (j < 0 || j > gBoard[i].length - 1) continue;
-                if (!gBoard[i][j].isShown) continue;
-                gBoard[i][j].isShown = false;
-                renderCell(i, j)
-            }
+        for (var i = 0; i < hintedCells.length; i++) {
+            hintedCells[i].isShown = false;
+            renderCell(hintedCells[i].i, hintedCells[i].j)
         }
     }, 1000)
 }
@@ -271,6 +280,7 @@ function checkUserScore() {
 }
 
 function getSafe() {
+    if (!gIsFirstClick) return
     if (gGame.safe === 0) return;
     gIsSafe = true;
     gGame.safe--
