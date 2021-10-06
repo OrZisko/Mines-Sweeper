@@ -1,20 +1,4 @@
 'use strict'
-var gStartTime;
-var gClockInterval;
-var gTime = 0
-function renderCell(i, j) {
-    var elCell = document.querySelector(`.cell${i}-${j}`)
-    elCell.classList.toggle('covered')
-    var cellVal = (gBoard[i][j].isMine) ? MINE : gBoard[i][j].minesAroundCount
-    if (!gBoard[i][j].isShown) cellVal = ''
-    elCell.innerHTML = cellVal;
-}
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-}
 
 function getEmptyCell() {
     var emptyCells = [];
@@ -29,6 +13,20 @@ function getEmptyCell() {
 function startClock() {
     gStartTime = Date.now()
     gClockInterval = setInterval(runningClock, 100)
+}
+
+function renderCell(i, j) {
+    var elCell = document.querySelector(`.cell${i}-${j}`)
+    elCell.classList.toggle('covered')
+    var cellVal = (gBoard[i][j].isMine) ? MINE : gBoard[i][j].minesAroundCount
+    if (!gBoard[i][j].isShown) cellVal = ''
+    elCell.innerHTML = cellVal;
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 function runningClock() {
@@ -62,4 +60,13 @@ function renderSymbolAmount(amount, symbol) {
         case SAFE:
             elSafe.innerHTML = symbolsStr;
     }
+}
+
+function checkIf7(idx) {
+    var idxStr = '' + idx;
+    if (!(idx % 7)) return true;
+    for (var i = 0; i < idxStr.length; i++) {
+        if (idxStr.charAt(i) === '7') return true;
+    }
+    return false;
 }
